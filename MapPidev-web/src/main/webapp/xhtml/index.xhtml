@@ -1,0 +1,891 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      template="/WEB-INF/template/template.xhtml">
+      
+      <ui:define name="title">
+      
+      <title>Dashboard - Levio</title>
+      
+      </ui:define>
+      
+      <ui:define name="content">
+      
+       
+            
+   
+            <div class="page-wrapper">
+                <div class="content container-fluid">
+                <h:form id="form">
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-lg-3">
+							<div class="dash-widget clearfix card-box">
+								<span class="dash-widget-icon"><i class="fa fa-cubes" aria-hidden="true"></i></span>
+								<div class="dash-widget-info">
+									<h3><h:outputText id="nprojects" value="#{statisticsBean.nbOfProjects()}" /></h3>
+									<span>Projects</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-lg-3">
+							<div class="dash-widget clearfix card-box">
+								<span class="dash-widget-icon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+								<div class="dash-widget-info">
+									<h3><h:outputText id="nclients"  value="#{statisticsBean.nbOfClients()}" /></h3>
+									<span>Clients</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-lg-3">
+							<div class="dash-widget clearfix card-box">
+								<span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+								<div class="dash-widget-info">
+									<h3><h:outputText id="nmandats"  value="#{statisticsBean.nbOfMandats()}"/></h3>
+									<span>Mandats</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-lg-3">
+							<div class="dash-widget clearfix card-box">
+								<span class="dash-widget-icon"><i class="fa fa-user" aria-hidden="true"></i></span>
+								<div class="dash-widget-info">
+									<h3><h:outputText id="nresources"  value="#{statisticsBean.nbOfResources()}" /></h3>
+									<span>Resources</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					</h:form>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-sm-6 text-center">
+									<div class="card-box">
+										<div id="area-chart" ></div>
+									</div>
+								</div>
+								<div class="col-sm-6 text-center">
+									<div class="card-box">
+										<div id="line-chart"></div>
+									</div>
+								</div>
+								<div  class="col-md-4 col-sm-12 text-center">
+									<div class="card-box">
+										<div id="bar-chart" ></div>
+									</div>
+								</div>
+								<div class="col-md-4 col-sm-12 text-center">
+									<div class="card-box">
+										<div id="stacked" ></div>
+									</div>
+								</div>
+								<div class="col-md-4 col-sm-12 text-center">
+									<div class="card-box">
+										<div id="pie-chart" ></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					    <div><span></span></div>
+					    
+				
+						<div class="row" style="display:none">
+						<div class="col-md-12">
+							<div class="table-responsive">
+					<h:dataTable class="table table-striped custom-table m-b-0 datatable" value="#{statisticsBean.mapLon()}" var="cp" id="tab"> 
+					<h:column >
+				<h:outputText value="Project Name " />
+				<h:outputText value="#{cp.projectId}" />
+				</h:column>
+					<h:column >
+				<h:outputText value="Project Adress " />
+				<h:outputText value="#{cp.address_Address}" />
+				</h:column>
+					<h:column >
+				<h:outputText value="Project Name " />
+				<h:outputText id="nameproject" value="#{cp.name}" />
+				</h:column>
+					<h:column >
+				<h:outputText value="Latitude " />
+				<h:outputText id="latitude" value="#{cp.address_Latitude}" />
+				</h:column>
+								<h:column >
+				<h:outputText value="Longitude " />
+				<h:outputText id="longitude" value="#{cp.address_Longitude}" />
+				</h:column>
+				
+				<h:column >
+				<h:outputText value="Taux " />
+				<h:outputText id="taux" value="#{cp.tauxDavancement}" />
+				</h:column>
+								
+								</h:dataTable>
+								</div>
+								</div>
+								</div>
+					  
+						
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <div id="chartdiv" style="width: 100%;height: 500px;"></div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    
+       <div>
+    <br />
+    <br />
+</div>
+    
+            <div class="row">
+            <h:outputText  style="display:none" id="avai"  value="#{statisticsBean.nbOfResourcesAvai(0)}"/>
+            <h:outputText  style="display:none" id="notnavai"  value="#{statisticsBean.nbOfResourcesAvai(1)}"/>
+            <h:outputText   style="display:none" id="avaison"  value="#{statisticsBean.nbOfResourcesAvai(2)}"/>
+            <h:outputText  style="display:none" id="hello"  value="#{statisticsBean.mapLon()}"/>
+           
+           
+                <div class="col-md-12">
+                   <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                </div>
+       
+            </div>
+<div><br />
+    <br /></div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="panel panel-table">
+								<div class="panel-heading">
+									<h3 class="panel-title">Invoices</h3>
+								</div>
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table class="table table-striped custom-table m-b-0">
+											<thead>
+												<tr>
+													<th>Invoice ID</th>
+													<th>Client</th>
+													<th>Due Date</th>
+													<th>Total</th>
+													<th>Status</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><a href="invoice-view.html">#INV-0001</a></td>
+													<td>
+														<h2><a href="#">Hazel Nutt</a></h2>
+													</td>
+													<td>8 Aug 2017</td>
+													<td>$380</td>
+													<td>
+														<span class="label label-warning-border">Partially Paid</span>
+													</td>
+												</tr>
+												<tr>
+													<td><a href="invoice-view.html">#INV-0002</a></td>
+													<td>
+														<h2><a href="#">Paige Turner</a></h2>
+													</td>
+													<td>17 Sep 2017</td>
+													<td>$500</td>
+													<td>
+														<span class="label label-success-border">Paid</span>
+													</td>
+												</tr>
+												<tr>
+													<td><a href="invoice-view.html">#INV-0003</a></td>
+													<td>
+														<h2><a href="#">Ben Dover</a></h2>
+													</td>
+													<td>30 Nov 2017</td>
+													<td>$60</td>
+													<td>
+														<span class="label label-danger-border">Unpaid</span>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="panel-footer">
+									<a href="invoices.html" class="text-primary">View all invoices</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="panel panel-table">
+								<div class="panel-heading">
+									<h3 class="panel-title">Payments</h3>
+								</div>
+								<div class="panel-body">
+									<div class="table-responsive">	
+										<table class="table table-striped custom-table m-b-0">
+											<thead>
+												<tr>
+													<th>Invoice ID</th>
+													<th>Client</th>
+													<th>Payment Type</th>
+													<th>Paid Date</th>
+													<th>Paid Amount</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><a href="invoice-view.html">#INV-0004</a></td>
+													<td>
+														<h2><a href="#">Barry Cuda</a></h2>
+													</td>
+													<td>Paypal</td>
+													<td>11 Jun 2017</td>
+													<td>$380</td>
+												</tr>
+												<tr>
+													<td><a href="invoice-view.html">#INV-0005</a></td>
+													<td>
+														<h2><a href="#">Tressa Wexler</a></h2>
+													</td>
+													<td>Paypal</td>
+													<td>21 Jul 2017</td>
+													<td>$500</td>
+												</tr>
+												<tr>
+													<td><a href="invoice-view.html">#INV-0006</a></td>
+													<td>
+														<h2><a href="#">Ruby Bartlett</a></h2>
+													</td>
+													<td>Paypal</td>
+													<td>28 Aug 2017</td>
+													<td>$60</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="panel-footer">
+									<a href="payments.html" class="text-primary">View all payments</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="panel panel-table">
+								<div class="panel-heading">
+									<h3 class="panel-title">Clients</h3>
+								</div>
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table class="table table-striped custom-table m-b-0">
+											<thead>
+												<tr>
+													<th style="min-width:200px;">Name</th>
+													<th>Email</th>
+													<th>Status</th>
+													<th class="text-right">Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td style="min-width:200px;">
+														<a href="#" class="avatar">B</a>
+														<h2><a href="client-profile.html">Barry Cuda <span>CEO</span></a></h2>
+													</td>
+													<td>barrycuda@example.com</td>
+													<td>
+														<div class="dropdown action-label">
+															<a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-success"></i> Active <i class="caret"></i>
+															</a>
+															<ul class="dropdown-menu pull-right">
+																<li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
+																<li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
+															</ul>
+														</div>
+													</td>
+													<td class="text-right">
+														<div class="dropdown">
+															<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+															<ul class="dropdown-menu pull-right">
+																<li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																<li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+															</ul>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a class="avatar">T</a>
+														<h2><a href="client-profile.html">Tressa Wexler <span>Manager</span></a></h2>
+													</td>
+													<td>tressawexler@example.com</td>
+													<td>
+														<div class="dropdown action-label">
+															<a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
+															</a>
+															<ul class="dropdown-menu pull-right">
+																<li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
+																<li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
+															</ul>
+														</div>
+													</td>
+													<td class="text-right">
+														<div class="dropdown">
+															<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+															<ul class="dropdown-menu pull-right">
+																<li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																<li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+															</ul>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a href="client-profile.html" class="avatar">R</a>
+														<h2><a href="client-profile.html">Ruby Bartlett <span>CEO</span></a></h2>
+													</td>
+													<td>rubybartlett@example.com</td>
+													<td>
+														<div class="dropdown action-label">
+															<a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
+															</a>
+															<ul class="dropdown-menu pull-right">
+																<li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
+																<li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
+															</ul>
+														</div>
+													</td>
+													<td class="text-right">
+														<div class="dropdown">
+															<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+															<ul class="dropdown-menu pull-right">
+																<li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																<li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+															</ul>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a href="client-profile.html" class="avatar">M</a>
+														<h2><a href="client-profile.html"> Misty Tison <span>CEO</span></a></h2>
+													</td>
+													<td>mistytison@example.com</td>
+													<td>
+														<div class="dropdown action-label">
+															<a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-success"></i> Active <i class="caret"></i>
+															</a>
+															<ul class="dropdown-menu pull-right">
+																<li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
+																<li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
+															</ul>
+														</div>
+													</td>
+													<td class="text-right">
+														<div class="dropdown">
+															<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+															<ul class="dropdown-menu pull-right">
+																<li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																<li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+															</ul>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<a href="client-profile.html" class="avatar">D</a>
+														<h2><a href="client-profile.html"> Daniel Deacon <span>CEO</span></a></h2>
+													</td>
+													<td>danieldeacon@example.com</td>
+													<td>
+														<div class="dropdown action-label">
+															<a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
+															</a>
+															<ul class="dropdown-menu pull-right">
+																<li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
+																<li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
+															</ul>
+														</div>
+													</td>
+													<td class="text-right">
+														<div class="dropdown">
+															<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+															<ul class="dropdown-menu pull-right">
+																<li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																<li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+															</ul>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="panel-footer">
+									<a href="clients.html" class="text-primary">View all clients</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="panel panel-table">
+								<div class="panel-heading">
+									<h3 class="panel-title">Recent Projects</h3>
+								</div>
+								<div class="panel-body">
+									<div class="table-responsive">
+										<h:dataTable class="table table-striped custom-table m-b-0" value="#{statisticsBean.mapLon()}" var="ca">
+											
+											
+													<h:column>
+													<f:facet name = "header">Project Name</f:facet>
+														<h2><a href="project-view.html"><h:outputText id="caa"  value="#{ca.name}" /></a></h2>
+														<small class="block text-ellipsis">
+															<span class="text-xs"></span><h:outputText  value="#{ca.address_Address}" />
+															
+														</small>
+													</h:column>
+													<h:column>
+													<f:facet name = "header">Progress</f:facet>
+														<div class="progress progress-xs progress-striped">
+															<div id="progress" class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="#{ca.tauxDavancement}" style="width: 65%"></div>
+														</div>
+													</h:column>
+													<h:column class="text-right">
+														<div class="dropdown">
+															<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+															<ul class="dropdown-menu pull-right">
+																<li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																<li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+															</ul>
+														</div>
+													</h:column>
+											
+										</h:dataTable>
+									</div>
+								</div>
+								<div class="panel-footer">
+									<a href="projects.html" class="text-primary">View all projects</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="themes">
+						<div class="themes-icon"><i class="fa fa-cog"></i></div>
+						<div class="themes-body">
+							<ul id="theme-change" class="theme-colors">
+								<li><a href="https://dreamguys.co.in/smarthr/orange/index.html"><span class="theme-orange"></span></a></li>
+								<li><a href="https://dreamguys.co.in/smarthr/purple/index.html"><span class="theme-purple"></span></a></li> 
+								<li><a href="https://dreamguys.co.in/smarthr/blue/index.html"><span class="theme-blue"></span></a></li>
+								<li><a href="index.html"><span class="theme-maroon"></span></a></li>
+								<li><a href="https://dreamguys.co.in/smarthr/light/index.html"><span class="theme-light"></span></a></li> 
+								<li><a href="https://dreamguys.co.in/smarthr/dark/index.html"><span class="theme-dark"></span></a></li> 
+								<li><a href="https://dreamguys.co.in/smarthr/rtl/index.html"><span class="theme-rtl">RTL</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="notification-box">
+					<div class="msg-sidebar notifications msg-noti">
+						<div class="topnav-dropdown-header">
+							<span>Messages</span>
+						</div>
+						<div class="drop-scroll msg-list-scroll">
+							<ul class="list-box">
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">R</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Richard Miles </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item new-message">
+											<div class="list-left">
+												<span class="avatar">J</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">John Doe</span>
+												<span class="message-time">1 Aug</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">T</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Tarah Shropshire </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">M</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Mike Litorus</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">C</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Catherine Manseau </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">D</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Domenic Houston </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">B</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Buster Wigton </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">R</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Rolland Webber </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">C</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Claire Mapes </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">M</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Melita Faucher</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">J</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Jeffery Lalor</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">L</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Loren Gatlin</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">T</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Tarah Shropshire</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="topnav-dropdown-footer">
+							<a href="chat.html">See all messages</a>
+						</div>
+					</div>
+				</div>			
+			</div>
+       
+		<div class="sidebar-overlay" data-reff="#sidebar"></div>
+        <script type="text/javascript" src="../assets/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../assets/js/jquery.slimscroll.js"></script>
+		<script type="text/javascript" src="../assets/plugins/morris/morris.min.js"></script>
+		<script type="text/javascript" src="../assets/plugins/raphael/raphael-min.js"></script>
+		<script type="text/javascript" src="../assets/js/app.js"></script>
+		<script type="text/javascript" src="../assets/js/ammap.js"></script>
+		<script type="text/javascript" src="../assets/js/canvasjs.min.js"></script>
+		<script type="text/javascript" src="../assets/js/export.min.js"></script>
+		<script type="text/javascript" src="../assets/js/light.js"></script>
+		<script type="text/javascript" src="../assets/js/worldLow.js"></script>
+		<link rel="stylesheet" href="../assets/css/export.css" type="text/css" media="all" />
+		
+		<script>
+window.onload = function () {
+
+	var varavai= parseInt(document.getElementById("avai").innerHTML);
+	var varnot = parseInt(document.getElementById("notnavai").innerHTML);
+	var varson = parseInt(document.getElementById("avaison").innerHTML);
+
+	var a = document.getElementById("hello").innerHTML;
+
+	var dd = {
+			animationEnabled: true,
+			exportEnabled: true,
+			title:{
+				text: "Nombres of resources by availibility"
+			},
+			data: [{
+				type: "pyramid",
+				indexLabelFontSize: 18,
+				valueRepresents: "area",
+				showInLegend: true,
+				legendText: "{indexLabel}",
+				toolTipContent: "<b>{indexLabel}:</b> {y} Resources",
+				dataPoints: [
+					{ y: varavai, indexLabel: "Available" },
+					{ y: varnot, indexLabel: "NotAvailable" },
+					{ y: varson, indexLabel: "AvailableSoon" }
+					
+		            
+				]
+			}]
+		}
+	
+	
+
+var chart = new CanvasJS.Chart("chartContainer", dd);
+chart.render();
+
+}
+</script>
+		
+		<script>
+
+		var var1 = document.getElementById("form:nprojects").innerHTML;
+		var var2 = document.getElementById("form:nclients").innerHTML;
+		var var3 = document.getElementById("form:nmandats").innerHTML;
+		var var4 = document.getElementById("form:nresources").innerHTML;
+		
+				var data = [
+			  { y: '2014', a: 50, b: 90},
+			  { y: '2015', a: 65,  b: 75},
+			  { y: '2016', a: 50,  b: 50},
+			  { y: '2017', a: 75,  b: 60},
+			  { y: '2018', a: 80,  b: 65},
+			  { y: '2019', a: 90,  b: 70},
+			  { y: '2020', a: 100, b: 75},
+			  { y: '2021', a: 115, b: 75},
+			  { y: '2022', a: 120, b: 85},
+			  { y: '2023', a: 145, b: 85},
+			  { y: '2024', a: 160, b: 95}
+			],
+			config = {
+			  data: data,
+			  xkey: 'y',
+			  ykeys: ['a', 'b'],
+			  labels: ['Total Income', 'Total Outcome'],
+			  fillOpacity: 0.6,
+			  hideHover: 'auto',
+			  behaveLikeLine: true,
+			  resize: true,
+			  pointFillColors:['#ffffff'],
+			  pointStrokeColors: ['black'],
+				gridLineColor: '#eef0f2',
+			  lineColors:['gray','#f43b48']
+		  };
+		config.element = 'area-chart';
+		Morris.Area(config);
+		config.element = 'line-chart';
+		Morris.Line(config);
+		config.element = 'bar-chart';
+		Morris.Bar(config);
+		config.element = 'stacked';
+		config.stacked = true;
+		Morris.Bar(config);
+		Morris.Donut({
+		  element: 'pie-chart',
+		  data: [
+			{label: "Projects", value: var1},
+			{label: "Clients", value: var2},
+			{label: "Mandats", value: var3},
+			{label: "Resources", value: var4}
+		  ]
+		});
+		</script>
+		
+		<script type="text/javascript">
+
+
+
+
+                   var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+
+                   /**
+                    * Create the map
+                    */
+
+                  /*   var var1 = document.getElementById("aa").innerHTML;
+                    
+                   console.log(var1) */
+
+                  var n = document.getElementById("tab").rows.length
+
+                 console.log(n)
+         
+	
+					
+					
+					var i="1" 
+
+                   var name = document.getElementById("tab:1:nameproject").innerHTML + " | Progress :  " + (document.getElementById("tab:1:taux").innerHTML).substring(0,2) +"%";
+                   console.log(name)
+                   
+                   var longi = parseFloat(document.getElementById("tab:1:longitude").innerHTML);
+                   console.log(longi)
+                   
+                   var lati = parseFloat(document.getElementById("tab:1:latitude").innerHTML);
+                   console.log(lati) 
+                   
+                   
+                   document.getElementById("progress").style.width=parseInt(document.getElementById("tab:1:taux").innerHTML)
+                   
+                   
+
+            var map = AmCharts.makeChart( "chartdiv", {
+
+
+                "type": "map",
+                "projection": "winkel3",
+                "theme": "light",
+                "imagesSettings": {
+
+
+
+                    "rollOverColor": "#089282",
+                    "rollOverScale": 3,
+                    "selectedScale": 3,
+                    "selectedColor": "#089282",
+                    "color": "#13564e"
+                },
+
+                "areasSettings": {
+                    "unlistedAreasColor": "#15A892",
+                    "outlineThickness": 0.1
+                },
+
+                "dataProvider": {
+
+                    "map": "worldLow",
+                    "images": [ {
+                        "svgPath": targetSVG,
+                        "zoomLevel": 5,
+                        "scale": 0.5,
+                        "title": name,
+                        "latitude": lati,
+                        "longitude": longi
+                    } ]
+                },
+                "export": {
+                    "enabled": true
+                }
+            } ); 
+    </script>
+      
+      </ui:define>
+
+</ui:composition>

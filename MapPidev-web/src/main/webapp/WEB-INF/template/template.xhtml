@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+	<h:head>
+		<ui:insert name="title"></ui:insert>
+		<meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0"/>
+        <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.png"/>
+        
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.min.css"/>
+        <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../assets/plugins/morris/morris.css"/>
+        <link rel="stylesheet" type="text/css" href="../assets/css/style.css"/>
+	</h:head>
+	
+	
+    <h:body>
+     <div class="main-wrapper">
+    <ui:include src="/WEB-INF/include/header.xhtml"></ui:include>
+    <ui:include src="/WEB-INF/include/sidebar.xhtml" ></ui:include>
+    <ui:insert name="content"></ui:insert>
+    </div>
+    
+    
+    
+    </h:body>
+    
+    
+</html>

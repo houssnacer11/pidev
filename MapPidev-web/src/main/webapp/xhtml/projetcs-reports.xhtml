@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      template="/WEB-INF/template/template.xhtml">
+      
+      <ui:define name="title">
+      
+      <title>Dashboard - Levio</title>
+      
+      </ui:define>
+      
+      <ui:define name="content">
+      <div class="page-wrapper">
+                <div class="content container-fluid">
+					<div class="row">
+						<div class="col-sm-8">
+							<h4 class="page-title">Projects Report</h4>
+						</div>
+					</div>
+					<h:form>
+					<div class="row filter-row">
+						<div class="col-sm-1 col-xs-6"> </div>
+					
+						<div class="col-sm-3 col-xs-6">  
+							<div class="form-group form-focus">
+								<label class="control-label">Project Name</label>
+								<h:inputText id="keywordproject" class="form-control floating" type="text" value="#{statisticsBean.keywordproject}"></h:inputText>
+							</div>
+						</div>
+						<div class="col-sm-3 col-xs-6">  
+						  <h:commandButton  class="btn btn-success btn-block" id="search" value="Search" action="statistics"></h:commandButton>
+						</div>     
+                    </div>
+                    </h:form>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="table-responsive">
+								<h:dataTable class="table table-striped custom-table m-b-0 datatable" value="#{statisticsBean.projects()}" var="cl" >
+									
+									
+											<h:column><f:facet name = "header">#</f:facet> <h:outputText value="#{cl.projectId}" /></h:column>
+											<h:column><f:facet name = "header">Project Name</f:facet><h:outputText value="#{cl.name}" /></h:column>
+											<h:column><f:facet name = "header">Date Begin</f:facet><h:outputText value="#{cl.dateBegin}" /></h:column>
+											<h:column><f:facet name = "header">Date End</f:facet><h:outputText value="#{cl.dateEnd}" /></h:column>
+											<h:column><f:facet name = "header">Address</f:facet><h:outputText value="#{cl.address_Address}" /></h:column>
+											<h:column><f:facet name = "header">Number of resource </f:facet><h:outputText value="#{cl.totalNbrRessources}" /></h:column>
+											<h:column><f:facet name = "header">Number of resource LEVIO</f:facet><h:outputText value="#{cl.totalNbrRessourcesLevio}" /></h:column>
+											
+<!-- 											<td class="text-right"> -->
+<!-- 												<div class="dropdown"> -->
+<!-- 													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a> -->
+<!-- 													<ul class="dropdown-menu pull-right"> -->
+<!-- 														<li><a href="edit-invoice.html"><i class="fa fa-pencil m-r-5"></i> Edit</a></li> -->
+<!-- 														<li><a href="invoice-view.html"><i class="fa fa-eye m-r-5"></i> View</a></li> -->
+<!-- 														<li><a href="#"><i class="fa fa-file-pdf-o m-r-5"></i> Download</a></li> -->
+<!-- 														<li><a href="#"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li> -->
+<!-- 													</ul> -->
+<!-- 												</div> -->
+<!-- 											</td> -->
+								
+								</h:dataTable>
+							</div>
+						</div>
+					</div>
+                </div>
+                </div>
+                
+                
+                
+                
+                
+                
+                
+                
+      
+            </ui:define>
+
+</ui:composition>
